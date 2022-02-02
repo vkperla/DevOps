@@ -1,0 +1,11 @@
+---
+- name: installing packages
+  hosts: all
+  become: true
+  gather_facts: yes
+
+  tasks:
+  - name: install packages
+    yum:
+     name: [ 'tree' ] 
+     state: absent

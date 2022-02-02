@@ -1,0 +1,13 @@
+---
+- name: creating files & directories
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: create a dir
+    file:
+      path: /home/vamshikrishnaperla/vamsiperla
+      state: absent
+      mode: 0755
+      owner: ansadmin

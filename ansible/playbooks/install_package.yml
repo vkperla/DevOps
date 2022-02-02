@@ -1,0 +1,9 @@
+---
+- name: installing packages
+  hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - name: install package
+      yum:
+        name: wget

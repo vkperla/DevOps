@@ -1,0 +1,15 @@
+---
+- name: installing packages
+  hosts: all
+  become: true
+  gather_facts: yes
+ 
+  tasks: 
+  - name: install packages
+    yum:
+     name: "{{item}}"
+     state: absent 
+    with_items:
+     - wget
+     - tree
+     - gzip

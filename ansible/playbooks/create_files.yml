@@ -1,0 +1,13 @@
+---
+- name: creating files & directories
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: create a file
+    file:
+      path: /home/vamshikrishnaperla/vamsi.txt
+      state: touch
+      mode: 0755
+      owner: ansadmin

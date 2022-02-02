@@ -1,0 +1,9 @@
+---
+- name: creating user
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: creating user ramu
+    become: true
+    user: 
+     name: ramu
