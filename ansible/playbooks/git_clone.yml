@@ -1,0 +1,10 @@
+---
+- name: clonning repo from git
+  hosts: devteam
+  gather_facts: no
+
+  tasks:
+  - name: git repo clone
+    git:
+      repo: https://vkperla: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@github.com/vkperla/ansibletest.git
+      dest: /home/ansadmin/vaulttest

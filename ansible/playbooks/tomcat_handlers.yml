@@ -20,7 +20,7 @@
 
   - name: extract packages
     unarchive:
-       src: /opt/{{tomcat_packages}}.58.tar.gz
+       src: /opt/{{tomcat_packages}}.tar.gz
        dest: /opt
        remote_src: yes
   
@@ -41,10 +41,17 @@
       src: /opt/{{tomcat_packages}}/bin/shutdown.sh
       dest: /usr/local/bin/tomcatdown
       state: link
+    notify: start tomcat
+  
+  - name: changing port number 
+    copy:
+      src: /home/ansadmin/server.xml 
+      dest: /opt/{{tomcat_packages}}/conf
+    notify: restart
 
-  - name: start the services
-    command: ./startup.sh
-    args:
-      chdir: /opt/{{tomcat_packages}}/bin
-
-    
+  handlers:
+  - name: start tomcat
+    command: nohup /usr/local/bin/tomcatup
+ 
+  - name: restart tomcat
+    command: /usr/local/bin/tomcatdown; nohup /usr/local/bin/tomcatup
