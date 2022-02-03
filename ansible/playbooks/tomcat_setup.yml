@@ -1,0 +1,50 @@
+---
+- name: installing apache tomcat
+  hosts: testteam
+  become: true
+  gather_facts: yes
+  vars_files:
+    - tomcat
+   
+  tasks:
+  - name: install java
+    yum:
+     name: java
+     state: latest
+
+  - name: download packages
+    get_url:
+       url: "{{tomcat_url}}"
+       dest: /opt
+       mode: 0755
+
+  - name: extract packages
+    unarchive:
+       src: /opt/"{{tomcat_packages}}".58.tar.gz
+       dest: /opt
+       remote_src: yes
+  
+  - name: change the permission on tomcat file
+    file:
+      path: /opt/"{{tomcat_packages}}"
+      mode: 0755
+      recurse: yes
+
+  - name: creating link file to startup
+    file:
+      src: /opt/"{{tomcat_packages}}"/bin/startup.sh
+      dest: /usr/local/bin/tomcatup
+      state: link
+
+  - name: creating link file to shutdown
+    file:
+      src: /opt/"{{tomcat_packages}}"/bin/shutdown.sh
+      dest: /usr/local/bin/tomcatdown
+      state: link
+
+  - name: start the services
+    command: ./startup.sh
+    args:
+      chdir: /opt/"{{tomcat_packages}}"/bin
+
+    
